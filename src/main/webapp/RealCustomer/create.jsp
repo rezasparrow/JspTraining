@@ -1,9 +1,6 @@
-<%@ page import="javafx.util.Pair" %>
-<%@ page import="java.util.List" %>
 <%@ page import="controller.RealCustomerController" %>
 <%@ page import="presentation.RealCustomerView" %>
 <%@ page import="util.MessageBundle" %>
-<%@ page import="jdk.nashorn.internal.ir.RuntimeNode" %>
 
 <%
     RealCustomerView realCustomerView = new RealCustomerView();
