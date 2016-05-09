@@ -8,7 +8,7 @@
     realCustomerView.lastName = request.getParameter("lastName");
     realCustomerView.fatherName = request.getParameter("fatherName");
     realCustomerView.nationalCode = request.getParameter("nationalCode");
-    realCustomerView.birthDay = request.getParameter("birthday");
+    realCustomerView.birthday = request.getParameter("birthday");
     MessageBundle errors = RealCustomerController.save(realCustomerView);
     if (errors.isValid()) {
         response.sendRedirect("/RealCustomer");

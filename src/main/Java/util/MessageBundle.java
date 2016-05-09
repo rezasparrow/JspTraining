@@ -3,9 +3,7 @@ package util;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Dotin School1 on 5/8/2016.
- */
+
 public class MessageBundle {
     private List<Message> messages;
 
@@ -27,5 +25,11 @@ public class MessageBundle {
 
     public List<Message> getMessages(){
         return messages;
+    }
+
+    public void addAll(MessageBundle messageBundle) {
+        for (Message  message : messageBundle.getMessages()){
+            addError(message);
+        }
     }
 }

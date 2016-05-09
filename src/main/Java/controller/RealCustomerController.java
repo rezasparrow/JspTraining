@@ -1,46 +1,78 @@
 package controller;
 
-import javafx.util.Pair;
+
+import bean.RealCustomer;
+import controller.Bundle.RealCustomerBundle;
+import dataaccess.RealCustomerCRUD;
 import presentation.RealCustomerView;
 import util.MessageBundle;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-
 
 public class RealCustomerController {
+
+
+
     public static MessageBundle save(RealCustomerView realCustomerView) {
-        MessageBundle messageBundle = new MessageBundle();
-        messageBundle.addError("test", "error message");
-        return messageBundle;
+        MessageBundle errors = validate(realCustomerView);
+        errors.addAll(validateNationalCode(realCustomerView.nationalCode));
+        if (errors.isValid()) {
+            try {
+                RealCustomer realCustomer = realCustomerView.toModel();
+                realCustomer.save();
+
+            } catch (ParseException e) {
+                errors.addError("birthday" , RealCustomerBundle.BIRTHDAY_INVALID_FORMAT);
+            }
+        }
+        return errors;
     }
 
-//    public static List<Pair<String, String>> save(String firstName, String lastName, String fatherName, String nationalCode, String birthday) {
-//        List<Pair<String, String>> errors = validate(firstName, lastName, fatherName, nationalCode, birthday);
-//        errors.addAll(validateNationalCode(nationalCode));
-//        if (errors.size() == 0) {
-//            DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
-//            Date date;
-//            try {
-//                date = df.parse(birthday);
-//                RealCustomer realCustomer = new RealCustomer(firstName, lastName, fatherName, date, nationalCode);
-//
-//                realCustomer.save();
-//
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                errors.add(new Pair<String, String>("base", "unknown error"));
-//            }
-//        }
-//        return errors;
-//    }
+    private static MessageBundle validate(RealCustomerView realCustomerView) {
+        MessageBundle errors = new MessageBundle();
+        if (realCustomerView.firstName == null || realCustomerView.firstName.trim().length() == 0) {
+            errors.addError("firstName", RealCustomerBundle.FIRST_NAME_REQUIRED);
+        }
+        if (realCustomerView.lastName == null || realCustomerView.lastName.trim().length() == 0) {
+            errors.addError("lastName", RealCustomerBundle.LAST_NAME_REQUIRED);
+        }
+        if (realCustomerView.fatherName == null || realCustomerView.fatherName.trim().length() == 0) {
+            errors.addError("fatherName", RealCustomerBundle.FATHER_NAME_REQUIRED);
+        }
+        if (realCustomerView.nationalCode == null || realCustomerView.nationalCode.trim().length() == 0) {
+            errors.addError("nationalCode", RealCustomerBundle.NATIONAL_CODE_REQUIRED);
+        } else if (realCustomerView.nationalCode.length() != 10) {
+            errors.addError("nationalCode", RealCustomerBundle.NATIONAL_CODE_LENGTH);
+        }
+
+        if (realCustomerView.birthday == null || realCustomerView.birthday.trim().length() == 0) {
+            errors.addError("birthday", RealCustomerBundle.BIRTHDAY_REQUIRED);
+        } else {
+            DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+            Date startDate;
+            try {
+                startDate = df.parse(realCustomerView.birthday);
+
+                df.format(startDate);
+            } catch (ParseException e) {
+                errors.addError("birthday", RealCustomerBundle.BIRTHDAY_INVALID_FORMAT);
+            }
+        }
+        return errors;
+    }
+
+    private static MessageBundle validateNationalCode(String nationalCode) {
+        MessageBundle errors = new MessageBundle();
+        if(nationalCode == null || "".equalsIgnoreCase(nationalCode)){
+            errors.addError("nationalCode"  , RealCustomerBundle.NATIONAL_CODE_REQUIRED);
+        }
+        else if(RealCustomerCRUD.findByNationalCode(nationalCode).size() != 0){
+            errors.addError("nationalCode" , RealCustomerBundle.NATIONAL_CODE_IS_UNIQUE);
+        }
+        return errors;
+    }
 
 }
