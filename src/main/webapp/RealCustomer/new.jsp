@@ -67,8 +67,6 @@
     </form>
     <div class="form"><a href="/RealCustomer" class="btn btn-sml">بازگشت</a></div>
 </div>
-<%
 
-%>
 </body>
 </html>

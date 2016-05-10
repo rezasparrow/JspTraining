@@ -82,4 +82,8 @@ public class RealCustomerController {
         return errors;
     }
 
+    public static RealCustomerView findById(int id) {
+        RealCustomerCRUD realCustomerCRUD = new RealCustomerCRUD();
+        return realCustomerCRUD.findById(id).toView();
+    }
 }

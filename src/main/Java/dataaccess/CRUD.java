@@ -13,6 +13,6 @@ public interface CRUD<T extends Customer> {
     void delete(int id) ;
     List<T> all(T customer) ;
     List<T> all() ;
-    List<T> findById(int id) ;
+    T findById(int id) ;
     List<T> update(int id, T customer)  ;
 }
