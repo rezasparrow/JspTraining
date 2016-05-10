@@ -1,11 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Dotin School1
-  Date: 5/8/2016
-  Time: 1:58 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="bean.RealCustomer" %>
+<%@ page import="controller.RealCustomerController" %>
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>مشتری حقیقی</title>
@@ -55,6 +53,10 @@
 
         </table>
     </form>
+    <%
+
+        List<RealCustomer> realCustomers = RealCustomerController.all();
+        if (realCustomers.size() > 0) { %>
 
     <table class="table">
         <thead>
@@ -82,18 +84,34 @@
         </tr>
         </thead>
         <tbody>
+        <% int num = 0;
+            for (RealCustomer realCustomer : realCustomers) {
+                num++;
+        %>
         <tr>
-            <td>1</td>
-            <td>16</td>
-            <td>رضا</td>
-            <td>صادقی</td>
-            <td>حسن</td>
-            <td>0123456789</td>
-            <td><a href="/RealCustomer/edit?id=1">edit</a></td>
-            <td><a href="/RealCustomer/delete?id=1">delete</a></td>
+
+            <td><%=num%>
+            </td>
+            <td><%=realCustomer.getCustomerNumber()%>
+            </td>
+            <td><%=realCustomer.getFirstName()%>
+            </td>
+            <td><%=realCustomer.getLastName()%>
+            </td>
+            <td><%=realCustomer.getFatherName()%>
+            </td>
+            <td><%=realCustomer.getNationalCode()%>
+            </td>
+            <td><a href="/RealCustomer/edit.jsp?id=<%=realCustomer.getId()%>">edit</a></td>
+            <td><a href="/RealCustomer/delete.jsp?id=<%=realCustomer.getId()%>">delete</a></td>
         </tr>
+        <%}%>
         </tbody>
     </table>
+    <%} else {%>
+
+    <h2>هیچ داده‌ای موجود نمی‌باشد</h2>
+    <%}%>
 </div>
 <div>
 

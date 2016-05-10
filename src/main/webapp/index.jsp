@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>home</title>
     <link rel="stylesheet" href="css/style.css">
 </head>

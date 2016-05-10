@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class RealCustomerController {
 
@@ -21,14 +22,20 @@ public class RealCustomerController {
         errors.addAll(validateNationalCode(realCustomerView.nationalCode));
         if (errors.isValid()) {
             try {
+                RealCustomerCRUD realCustomerCRUD = new RealCustomerCRUD();
                 RealCustomer realCustomer = realCustomerView.toModel();
-                realCustomer.save();
+                realCustomer = realCustomerCRUD.create(realCustomer);
 
             } catch (ParseException e) {
                 errors.addError("birthday" , RealCustomerBundle.BIRTHDAY_INVALID_FORMAT);
             }
         }
         return errors;
+    }
+
+    public static List<RealCustomer> all(){
+        RealCustomerCRUD realCustomerCRUD = new RealCustomerCRUD();
+        return realCustomerCRUD.all();
     }
 
     private static MessageBundle validate(RealCustomerView realCustomerView) {

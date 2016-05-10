@@ -16,7 +16,7 @@ public class RealCustomerView {
     public String fatherName;
     public String birthday;
     public String nationalCode;
-    public String customerNumber;
+    public int customerNumber;
     public Integer id;
 
 
@@ -25,8 +25,11 @@ public class RealCustomerView {
         Date date;
         date = df.parse(birthday);
         RealCustomer realCustomer = new RealCustomer(firstName, lastName, fatherName, date, nationalCode);
-        realCustomer.setId(id);
+        if (id != null) {
+            realCustomer.setId(id);
+        }
         realCustomer.setCustomerNumber(customerNumber);
+
         return realCustomer;
     }
 }
