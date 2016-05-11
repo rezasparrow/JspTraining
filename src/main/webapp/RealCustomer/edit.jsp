@@ -18,8 +18,8 @@
         realCustomer.fatherName = request.getParameter("fatherName");
         realCustomer.birthday = request.getParameter("birthday");
         realCustomer.nationalCode = request.getParameter("nationalCode");
-        MessageBundle error = RealCustomerController.update(realCustomer);
-        if (error.isValid()) {
+        MessageBundle messageBundle = RealCustomerController.update(realCustomer);
+        if (messageBundle.isValid()) {
             response.sendRedirect("/RealCustomer/index.jsp");
         }
     } else {
