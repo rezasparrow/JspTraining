@@ -5,10 +5,18 @@
 
 <%
     request.setCharacterEncoding("UTF-8");
-    String id =request.getParameter("id");
-    RealCustomerView realCustomer = RealCustomerController.findById(Integer.parseInt(id));
-
-    System.out.println(realCustomer);
+    String id = request.getParameter("id");
+    if (id != null) {
+        RealCustomerView realCustomerView = new RealCustomerView();
+        realCustomerView.id = Integer.parseInt(id);
+        realCustomerView.firstName = request.getParameter("firstName");
+        realCustomerView.lastName = request.getParameter("lastName");
+        realCustomerView.fatherName = request.getParameter("fatherName");
+        realCustomerView.birthday = request.getParameter("birthday");
+        realCustomerView.nationalCode = request.getParameter("nationalCode");
+        RealCustomerController.update(realCustomerView);
+    }
+    RealCustomerView realCustomer = new RealCustomerView();
 %>
 
 

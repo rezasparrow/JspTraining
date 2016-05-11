@@ -32,7 +32,7 @@ public abstract class Manager<T extends IEntity> {
         Session session = dataBaseManager.getSession().openSession();
         Transaction transaction = session.beginTransaction();
 
-        session.delete(session.load(getEntityClass(), id));
+        session.delete(session.get(getEntityClass(), id));
         transaction.commit();
         session.close();
     }
@@ -46,21 +46,22 @@ public abstract class Manager<T extends IEntity> {
         return entities;
     }
 
+
     public T findById(int id) {
         DataBaseManager dataBaseManager = new DataBaseManager();
         Session session = dataBaseManager.getSession().openSession();
         Class<? extends IEntity> a = getEntityClass();
-        T entity = (T) session.load(getEntityClass(), id);
+        T entity = (T) session.get(getEntityClass(), id);
         session.close();
         return entity;
     }
 
-    void update(int id, T entity) {
+    public void update(T entity) {
         DataBaseManager dataBaseManager = new DataBaseManager();
 
         Session session = dataBaseManager.getSession().openSession();
         Transaction transaction = session.beginTransaction();
-        session.saveOrUpdate(entity);
+        session.update(entity );
         transaction.commit();
         session.close();
     }

@@ -4,30 +4,32 @@ package controller;
 import bean.RealCustomer;
 import controller.Bundle.RealCustomerBundle;
 import dataaccess.RealCustomerManager;
+import exception.NotFoundObjectException;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import presentation.RealCustomerView;
 import util.MessageBundle;
 
+import javax.persistence.Id;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class RealCustomerController {
 
-
     public static MessageBundle save(RealCustomerView realCustomerView) {
         MessageBundle errors = validate(realCustomerView);
         errors.addAll(validateNationalCode(realCustomerView.nationalCode));
         if (errors.isValid()) {
-            try {
-                RealCustomerManager realCustomerManager = new RealCustomerManager();
-                RealCustomer realCustomer = realCustomerView.toModel();
-                realCustomerManager.create(realCustomer);
 
-            } catch (ParseException e) {
-                errors.addError("birthday", RealCustomerBundle.BIRTHDAY_INVALID_FORMAT);
-            }
+            RealCustomerManager realCustomerManager = new RealCustomerManager();
+            RealCustomer realCustomer = realCustomerView.toModel();
+            realCustomerManager.create(realCustomer);
+
+
         }
         return errors;
     }
@@ -80,8 +82,42 @@ public class RealCustomerController {
         return errors;
     }
 
-    public static RealCustomerView findById(int id) {
+    public static RealCustomerView findById(int id) throws NotFoundObjectException {
         RealCustomerManager realCustomerManager = new RealCustomerManager();
-        return realCustomerManager.findById(id).toView();
+        RealCustomer realCustomer = realCustomerManager.findById(id);
+        if (realCustomer != null) {
+            return realCustomer.toView();
+        }
+        throw new NotFoundObjectException();
+    }
+
+    public static MessageBundle update(RealCustomerView view) {
+        MessageBundle errors = new MessageBundle();
+        errors.addAll(validate(view));
+        if (errors.isValid()) {
+            try {
+                RealCustomerView realCustomerView = findById(view.id);
+                RealCustomerManager realCustomerManager = new RealCustomerManager();
+                view.customerNumber = realCustomerView.customerNumber;
+                realCustomerManager.update(view.toModel());
+            } catch (NotFoundObjectException e) {
+                errors.addError("base", RealCustomerBundle.NOT_FOUNT_REAL_CUSTOMER);
+            }
+        }
+        return errors;
+    }
+
+    public static MessageBundle delete(int id) {
+        MessageBundle messageBundle = new MessageBundle();
+        RealCustomerManager realCustomerManager = new RealCustomerManager();
+        realCustomerManager.delete(id);
+        return messageBundle;
+    }
+
+    public static List<RealCustomer> all(RealCustomerView realCustomerView) {
+        RealCustomerManager realCustomerManager = new RealCustomerManager();
+
+        return realCustomerManager.all(realCustomerView.toModel());
+
     }
 }

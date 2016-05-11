@@ -11,4 +11,5 @@ public class RealCustomerBundle {
     public final static String BIRTHDAY_REQUIRED = "تاریخ تولد الزامی است";
     public final static String BIRTHDAY_INVALID_FORMAT = "فرمت تاریخ تولد باید به صورت yyyy-mm-dd باشد";
     public final static String NATIONAL_CODE_LENGTH = "طول کد‌ملی باید ۱۰ کاراکتر باشد";
+    public final static String NOT_FOUNT_REAL_CUSTOMER = "آینم مورد نظر یپدا نشد.";
 }

@@ -1,9 +1,23 @@
 <%@ page import="java.util.List" %>
 <%@ page import="bean.RealCustomer" %>
 <%@ page import="controller.RealCustomerController" %>
-
-
+<%@ page import="presentation.RealCustomerView" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+
+<%
+    RealCustomerView realCustomerView = new RealCustomerView();
+    realCustomerView.firstName = request.getParameter("firstName");
+    realCustomerView.lastName = request.getParameter("lastName");
+    realCustomerView.nationalCode = request.getParameter("nationalCode");
+    String customerNumber = request.getParameter("customerNumber");
+    if (customerNumber != null) {
+        realCustomerView.customerNumber = customerNumber;
+    }
+
+    List<RealCustomer> realCustomers = RealCustomerController.all(realCustomerView);
+%>
+
 <html>
 <head>
     <title>مشتری حقیقی</title>
@@ -15,7 +29,7 @@
 </div>
 <div class="content">
     <a class="btn btn-sml" href="/RealCustomer/new.jsp">تعریف مشتری جدید</a>
-    <form method="post" action="/RealCustomer/search">
+    <form method="post" action="/RealCustomer/index.jsp">
         <table class="table">
             <thead>
             <tr>
@@ -55,7 +69,6 @@
     </form>
     <%
 
-        List<RealCustomer> realCustomers = RealCustomerController.all();
         if (realCustomers.size() > 0) { %>
 
     <table class="table">
