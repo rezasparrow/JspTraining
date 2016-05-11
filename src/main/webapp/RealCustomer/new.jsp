@@ -4,16 +4,21 @@
 <%@ page import="util.MessageBundle" %>
 
 <%
-    request.setCharacterEncoding("UTF-8");
     RealCustomerView realCustomer = new RealCustomerView();
-    realCustomer.firstName = request.getParameter("firstName") ;
-    realCustomer.lastName = request.getParameter("lastName");
-    realCustomer.fatherName = request.getParameter("fatherName");
-    realCustomer.nationalCode = request.getParameter("nationalCode");
-    realCustomer.birthday = request.getParameter("birthday");
-    MessageBundle errors = RealCustomerController.save(realCustomer);
-    if (errors.isValid()) {
-        response.sendRedirect("/RealCustomer");
+
+    String method  = request.getMethod();
+    if (method.equalsIgnoreCase("post")){
+
+        request.setCharacterEncoding("UTF-8");
+        realCustomer.firstName = request.getParameter("firstName") ;
+        realCustomer.lastName = request.getParameter("lastName");
+        realCustomer.fatherName = request.getParameter("fatherName");
+        realCustomer.nationalCode = request.getParameter("nationalCode");
+        realCustomer.birthday = request.getParameter("birthday");
+        MessageBundle errors = RealCustomerController.save(realCustomer);
+        if (errors.isValid()) {
+            response.sendRedirect("/RealCustomer");
+        }
     }
 
     System.out.println(realCustomer);

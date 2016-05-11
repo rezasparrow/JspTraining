@@ -2,21 +2,34 @@
 <%@ page import="bean.RealCustomer" %>
 <%@ page import="controller.RealCustomerController" %>
 <%@ page import="presentation.RealCustomerView" %>
+<%@ page import="util.MessageBundle" %>
+<%@ page import="exception.NotFoundObjectException" %>
 
 <%
     request.setCharacterEncoding("UTF-8");
     String id = request.getParameter("id");
-    if (id != null) {
-        RealCustomerView realCustomerView = new RealCustomerView();
-        realCustomerView.id = Integer.parseInt(id);
-        realCustomerView.firstName = request.getParameter("firstName");
-        realCustomerView.lastName = request.getParameter("lastName");
-        realCustomerView.fatherName = request.getParameter("fatherName");
-        realCustomerView.birthday = request.getParameter("birthday");
-        realCustomerView.nationalCode = request.getParameter("nationalCode");
-        RealCustomerController.update(realCustomerView);
-    }
     RealCustomerView realCustomer = new RealCustomerView();
+
+    if ("post".equalsIgnoreCase(request.getMethod())) {
+
+        realCustomer.id = Integer.parseInt(id);
+        realCustomer.firstName = request.getParameter("firstName");
+        realCustomer.lastName = request.getParameter("lastName");
+        realCustomer.fatherName = request.getParameter("fatherName");
+        realCustomer.birthday = request.getParameter("birthday");
+        realCustomer.nationalCode = request.getParameter("nationalCode");
+        MessageBundle error = RealCustomerController.update(realCustomer);
+        if (error.isValid()) {
+            response.sendRedirect("/RealCustomer/index.jsp");
+        }
+    } else {
+        try {
+
+            realCustomer = RealCustomerController.findById(Integer.parseInt(id));
+        } catch (Exception e) {
+            response.sendRedirect("/RealCustomer/index.jsp");
+        }
+    }
 %>
 
 
@@ -35,6 +48,7 @@
             <label for="firstName" class="label-control"> نام</label>
             <div class="sml-col"><input type="text" value="<%=realCustomer.firstName%>" name="firstName" id="firstName"
                                         class="input-control">
+                <input type="hidden" name="id" value="<%=realCustomer.getId()%>">
             </div>
         </div>
         <div class="form-elm">

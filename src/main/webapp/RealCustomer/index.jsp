@@ -11,7 +11,7 @@
     realCustomerView.lastName = request.getParameter("lastName");
     realCustomerView.nationalCode = request.getParameter("nationalCode");
     String customerNumber = request.getParameter("customerNumber");
-    if (customerNumber != null) {
+    if (customerNumber!= null && !"".equals(customerNumber.trim())) {
         realCustomerView.customerNumber = customerNumber;
     }
 

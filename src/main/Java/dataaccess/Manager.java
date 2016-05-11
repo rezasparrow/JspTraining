@@ -17,7 +17,7 @@ public abstract class Manager<T extends IEntity> {
     public void create(T entity) {
         DataBaseManager dataBaseManager = new DataBaseManager();
 
-        Session session = dataBaseManager.getSession().openSession();
+        Session session = dataBaseManager.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         session.persist(entity);
         transaction.commit();
@@ -29,7 +29,7 @@ public abstract class Manager<T extends IEntity> {
     public void delete(int id) {
         DataBaseManager dataBaseManager = new DataBaseManager();
 
-        Session session = dataBaseManager.getSession().openSession();
+        Session session = dataBaseManager.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
 
         session.delete(session.get(getEntityClass(), id));
@@ -39,7 +39,7 @@ public abstract class Manager<T extends IEntity> {
 
     public List<T> all() {
         DataBaseManager dataBaseManager = new DataBaseManager();
-        Session session = dataBaseManager.getSession().openSession();
+        Session session = dataBaseManager.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(RealCustomer.class);
         List<T> entities = criteria.list();
         session.close();
@@ -49,7 +49,7 @@ public abstract class Manager<T extends IEntity> {
 
     public T findById(int id) {
         DataBaseManager dataBaseManager = new DataBaseManager();
-        Session session = dataBaseManager.getSession().openSession();
+        Session session = dataBaseManager.getSessionFactory().openSession();
         Class<? extends IEntity> a = getEntityClass();
         T entity = (T) session.get(getEntityClass(), id);
         session.close();
@@ -57,12 +57,14 @@ public abstract class Manager<T extends IEntity> {
     }
 
     public void update(T entity) {
-        DataBaseManager dataBaseManager = new DataBaseManager();
+        try (DataBaseManager dataBaseManager = new DataBaseManager()) {
 
-        Session session = dataBaseManager.getSession().openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(entity );
-        transaction.commit();
-        session.close();
+
+            Session session = dataBaseManager.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            session.update(entity);
+            transaction.commit();
+            session.close();
+        }
     }
 }
