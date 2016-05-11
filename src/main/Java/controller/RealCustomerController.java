@@ -3,7 +3,7 @@ package controller;
 
 import bean.RealCustomer;
 import controller.Bundle.RealCustomerBundle;
-import dataaccess.RealCustomerCRUD;
+import dataaccess.RealCustomerManager;
 import presentation.RealCustomerView;
 import util.MessageBundle;
 
@@ -16,26 +16,25 @@ import java.util.List;
 public class RealCustomerController {
 
 
-
     public static MessageBundle save(RealCustomerView realCustomerView) {
         MessageBundle errors = validate(realCustomerView);
         errors.addAll(validateNationalCode(realCustomerView.nationalCode));
         if (errors.isValid()) {
             try {
-                RealCustomerCRUD realCustomerCRUD = new RealCustomerCRUD();
+                RealCustomerManager realCustomerManager = new RealCustomerManager();
                 RealCustomer realCustomer = realCustomerView.toModel();
-                realCustomer = realCustomerCRUD.create(realCustomer);
+                realCustomerManager.create(realCustomer);
 
             } catch (ParseException e) {
-                errors.addError("birthday" , RealCustomerBundle.BIRTHDAY_INVALID_FORMAT);
+                errors.addError("birthday", RealCustomerBundle.BIRTHDAY_INVALID_FORMAT);
             }
         }
         return errors;
     }
 
-    public static List<RealCustomer> all(){
-        RealCustomerCRUD realCustomerCRUD = new RealCustomerCRUD();
-        return realCustomerCRUD.all();
+    public static List<RealCustomer> all() {
+        RealCustomerManager realCustomerManager = new RealCustomerManager();
+        return realCustomerManager.all();
     }
 
     private static MessageBundle validate(RealCustomerView realCustomerView) {
@@ -73,17 +72,16 @@ public class RealCustomerController {
 
     private static MessageBundle validateNationalCode(String nationalCode) {
         MessageBundle errors = new MessageBundle();
-        if(nationalCode == null || "".equalsIgnoreCase(nationalCode)){
-            errors.addError("nationalCode"  , RealCustomerBundle.NATIONAL_CODE_REQUIRED);
-        }
-        else if(RealCustomerCRUD.findByNationalCode(nationalCode).size() != 0){
-            errors.addError("nationalCode" , RealCustomerBundle.NATIONAL_CODE_IS_UNIQUE);
+        if (nationalCode == null || "".equalsIgnoreCase(nationalCode)) {
+            errors.addError("nationalCode", RealCustomerBundle.NATIONAL_CODE_REQUIRED);
+        } else if (RealCustomerManager.findByNationalCode(nationalCode).size() != 0) {
+            errors.addError("nationalCode", RealCustomerBundle.NATIONAL_CODE_IS_UNIQUE);
         }
         return errors;
     }
 
     public static RealCustomerView findById(int id) {
-        RealCustomerCRUD realCustomerCRUD = new RealCustomerCRUD();
-        return realCustomerCRUD.findById(id).toView();
+        RealCustomerManager realCustomerManager = new RealCustomerManager();
+        return realCustomerManager.findById(id).toView();
     }
 }
