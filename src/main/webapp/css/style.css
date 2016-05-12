@@ -62,7 +62,7 @@ a :hover {
 }
 
 .center{
-    padding-right: calc(50% - 100px);
+    padding-right: calc(40% - 100px);
     padding-top: calc(15% - 50px);
 }
 .search{

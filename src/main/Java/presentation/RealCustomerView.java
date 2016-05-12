@@ -2,6 +2,7 @@ package presentation;
 
 import bean.RealCustomer;
 import controller.Bundle.RealCustomerBundle;
+import dataaccess.IEntity;
 import util.MessageBundle;
 
 import java.text.DateFormat;
@@ -11,7 +12,7 @@ import java.util.BitSet;
 import java.util.Date;
 
 
-public class RealCustomerView {
+public class RealCustomerView implements IView<RealCustomer> {
     public String firstName;
     public String lastName;
     public String fatherName;
@@ -70,5 +71,18 @@ public class RealCustomerView {
 
     public Integer getId() {
         return id;
+    }
+
+    public static RealCustomerView toView(RealCustomer realCustomer) {
+        RealCustomerView view = new RealCustomerView();
+        view.id = realCustomer.getId();
+        view.customerNumber = realCustomer.getCustomerNumber().toString();
+        view.firstName = realCustomer.getFirstName();
+        view.lastName = realCustomer.getLastName();
+        view.fatherName = realCustomer.getFatherName();
+        view.nationalCode = realCustomer.getNationalCode();
+        view.birthday = realCustomer.getBirthDay().toString();
+
+        return view;
     }
 }

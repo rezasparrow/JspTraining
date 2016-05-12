@@ -1,5 +1,6 @@
 package dataaccess;
 
+import presentation.IView;
 import presentation.RealCustomerView;
 
 /**

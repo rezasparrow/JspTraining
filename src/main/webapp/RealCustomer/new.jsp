@@ -33,7 +33,7 @@
 <body style="background:#cccccc;">
 <div style="direction: rtl" class="container">
     <div class="header">
-        <a href="/index.html" class="btn btn-sml">خانه</a>
+        <a href="/index.jsp" class="btn btn-sml">خانه</a>
     </div>
     <form method="post" action="/RealCustomer/new.jsp"   class="form">
         <div class="form-elm">

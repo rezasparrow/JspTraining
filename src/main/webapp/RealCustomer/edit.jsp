@@ -10,6 +10,7 @@
     String id = request.getParameter("id");
     RealCustomerView realCustomer = new RealCustomerView();
 
+    RealCustomerController controller = new RealCustomerController();
     if ("post".equalsIgnoreCase(request.getMethod())) {
 
         realCustomer.id = Integer.parseInt(id);
@@ -18,14 +19,15 @@
         realCustomer.fatherName = request.getParameter("fatherName");
         realCustomer.birthday = request.getParameter("birthday");
         realCustomer.nationalCode = request.getParameter("nationalCode");
-        MessageBundle messageBundle = RealCustomerController.update(realCustomer);
+
+        MessageBundle messageBundle = controller.update(realCustomer);
         if (messageBundle.isValid()) {
             response.sendRedirect("/RealCustomer/index.jsp");
         }
     } else {
         try {
 
-            realCustomer = RealCustomerController.findById(Integer.parseInt(id));
+            realCustomer = RealCustomerView.toView((RealCustomer) controller.findById(Integer.parseInt(id)));
         } catch (Exception e) {
             response.sendRedirect("/RealCustomer/index.jsp");
         }
@@ -41,7 +43,7 @@
 <body style="background:#cccccc;">
 <div style="direction: rtl" class="container">
     <div class="header">
-        <a href="/index.html" class="btn btn-sml">خانه</a>
+        <a href="/index.jsp" class="btn btn-sml">خانه</a>
     </div>
     <form method="post" action="/RealCustomer/edit.jsp" class="form">
         <div class="form-elm">

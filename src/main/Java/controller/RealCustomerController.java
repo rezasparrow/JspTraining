@@ -8,6 +8,7 @@ import exception.NotFoundObjectException;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import presentation.RealCustomerView;
+import util.Message;
 import util.MessageBundle;
 
 import javax.persistence.Id;
@@ -18,28 +19,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class RealCustomerController {
-
-    public static MessageBundle save(RealCustomerView realCustomerView) {
-        MessageBundle errors = validate(realCustomerView);
-        errors.addAll(validateNationalCode(realCustomerView.nationalCode));
-        if (errors.isValid()) {
-
-            RealCustomerManager realCustomerManager = new RealCustomerManager();
-            RealCustomer realCustomer = realCustomerView.toModel();
-            realCustomerManager.create(realCustomer);
+public class RealCustomerController extends Controller<RealCustomerView, RealCustomer> {
 
 
-        }
-        return errors;
+    @Override
+    RealCustomerManager getManager() {
+        return new RealCustomerManager();
     }
 
-    public static List<RealCustomer> all() {
-        RealCustomerManager realCustomerManager = new RealCustomerManager();
-        return realCustomerManager.all();
-    }
-
-    private static MessageBundle validate(RealCustomerView realCustomerView) {
+    MessageBundle validate(RealCustomerView realCustomerView) {
         MessageBundle errors = new MessageBundle();
         if (realCustomerView.firstName == null || realCustomerView.firstName.trim().length() == 0) {
             errors.addError("firstName", RealCustomerBundle.FIRST_NAME_REQUIRED);
@@ -69,6 +57,9 @@ public class RealCustomerController {
                 errors.addError("birthday", RealCustomerBundle.BIRTHDAY_INVALID_FORMAT);
             }
         }
+        if (realCustomerView.id == null) {
+            errors.addAll(validateNationalCode(realCustomerView.nationalCode));
+        }
         return errors;
     }
 
@@ -82,42 +73,16 @@ public class RealCustomerController {
         return errors;
     }
 
-    public static RealCustomerView findById(int id) throws NotFoundObjectException {
-        RealCustomerManager realCustomerManager = new RealCustomerManager();
-        RealCustomer realCustomer = realCustomerManager.findById(id);
-        if (realCustomer != null) {
-            return realCustomer.toView();
-        }
-        throw new NotFoundObjectException();
-    }
-
-    public static MessageBundle update(RealCustomerView view) {
-        MessageBundle errors = new MessageBundle();
-        errors.addAll(validate(view));
-        if (errors.isValid()) {
-            try {
-                RealCustomerView realCustomerView = findById(view.id);
-                RealCustomerManager realCustomerManager = new RealCustomerManager();
-                view.customerNumber = realCustomerView.customerNumber;
-                realCustomerManager.update(view.toModel());
-            } catch (NotFoundObjectException e) {
-                errors.addError("base", RealCustomerBundle.NOT_FOUNT_REAL_CUSTOMER);
-            }
-        }
-        return errors;
-    }
-
-    public static MessageBundle delete(int id) {
+    @Override
+    public MessageBundle update(RealCustomerView view) {
         MessageBundle messageBundle = new MessageBundle();
-        RealCustomerManager realCustomerManager = new RealCustomerManager();
-        realCustomerManager.delete(id);
+        try {
+            RealCustomer entity = (RealCustomer) findById(view.id);
+            view.customerNumber = entity.getCustomerNumber().toString();
+            return super.update(view);
+        } catch (NotFoundObjectException e) {
+            messageBundle.addError("base", "مشتری مورد نظر پیدا نشد.");
+        }
         return messageBundle;
-    }
-
-    public static List<RealCustomer> all(RealCustomerView realCustomerView) {
-        RealCustomerManager realCustomerManager = new RealCustomerManager();
-
-        return realCustomerManager.all(realCustomerView.toModel());
-
     }
 }

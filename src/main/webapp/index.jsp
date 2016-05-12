@@ -14,6 +14,7 @@
 
         <a class="btn btn-lg" href="/RealCustomer"> مشتری حقیقی</a>
         <a class="btn btn-lg" href="/LegalCustomer" > مشتری حقوقی</a>
+        <a class="btn btn-lg" href="/LoanType" >تسهیلات</a>
     </div>
 </div>
 </body>
