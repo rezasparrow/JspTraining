@@ -4,10 +4,19 @@
 
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
-    <jsp-config>
-        <jsp-property-group>
-            <url-pattern>*.jsp</url-pattern>
-            <page-encoding>UTF-8</page-encoding>
-        </jsp-property-group>
-    </jsp-config>
+
+
+
+    <servlet>
+        <servlet-name>NewLoanType</servlet-name>
+        <servlet-class>presentation.controller.LoanTypeController</servlet-class>
+        <init-param>
+            <param-name>action</param-name>
+            <param-value>new</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NewLoanType</servlet-name>
+        <url-pattern>/LoanType/new</url-pattern>
+    </servlet-mapping>
 </web-app>

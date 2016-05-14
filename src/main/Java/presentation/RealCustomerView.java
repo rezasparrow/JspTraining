@@ -1,14 +1,10 @@
 package presentation;
 
 import bean.RealCustomer;
-import controller.Bundle.RealCustomerBundle;
-import dataaccess.IEntity;
-import util.MessageBundle;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.BitSet;
 import java.util.Date;
 
 

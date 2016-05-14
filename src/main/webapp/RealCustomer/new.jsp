@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import="presentation.RealCustomerView" %>
-<%@ page import="controller.RealCustomerController" %>
+<%@ page import="logic.RealCustomerManipulator" %>
 <%@ page import="util.MessageBundle" %>
 
 <%
@@ -15,7 +15,8 @@
         realCustomer.fatherName = request.getParameter("fatherName");
         realCustomer.nationalCode = request.getParameter("nationalCode");
         realCustomer.birthday = request.getParameter("birthday");
-        MessageBundle errors = RealCustomerController.save(realCustomer);
+        RealCustomerManipulator realCustomerController = new RealCustomerManipulator();
+        MessageBundle errors = realCustomerController.save(realCustomer);
         if (errors.isValid()) {
             response.sendRedirect("/RealCustomer");
         }
@@ -28,8 +29,9 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/style.css">
-    <title>تعریف مشتری حقوقی</title></head>
-<meta charset="utf-8">
+    <title>تعریف مشتری حقوقی</title>
+    <meta charset="utf-8">
+</head>
 <body style="background:#cccccc;">
 <div style="direction: rtl" class="container">
     <div class="header">

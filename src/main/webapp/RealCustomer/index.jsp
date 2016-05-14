@@ -1,13 +1,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="bean.RealCustomer" %>
-<%@ page import="controller.RealCustomerController" %>
+<%@ page import="logic.RealCustomerManipulator" %>
 <%@ page import="presentation.RealCustomerView" %>
 <%@ page import="dataaccess.RealCustomerManager" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 
 <%
-    RealCustomerController controller = new RealCustomerController();
+    RealCustomerManipulator logic = new RealCustomerManipulator();
     RealCustomerView realCustomerView = new RealCustomerView();
     realCustomerView.firstName = request.getParameter("firstName");
     realCustomerView.lastName = request.getParameter("lastName");

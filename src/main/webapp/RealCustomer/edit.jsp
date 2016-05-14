@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import="bean.RealCustomer" %>
-<%@ page import="controller.RealCustomerController" %>
+<%@ page import="logic.RealCustomerManipulator" %>
 <%@ page import="presentation.RealCustomerView" %>
 <%@ page import="util.MessageBundle" %>
 <%@ page import="exception.NotFoundObjectException" %>
@@ -10,7 +10,7 @@
     String id = request.getParameter("id");
     RealCustomerView realCustomer = new RealCustomerView();
 
-    RealCustomerController controller = new RealCustomerController();
+    RealCustomerManipulator logic = new RealCustomerManipulator();
     if ("post".equalsIgnoreCase(request.getMethod())) {
 
         realCustomer.id = Integer.parseInt(id);

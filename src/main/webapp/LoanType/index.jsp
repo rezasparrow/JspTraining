@@ -1,12 +1,13 @@
 <%@ page import="presentation.LoanTypeView" %>
-<%@ page import="controller.LoanTypeController" %>
+<%@ page import="logic.LoanTypeManipulator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="bean.LoanType" %>
 <%
-    LoanTypeController controller = new LoanTypeController();
+    LoanTypeManipulator logic = new LoanTypeManipulator();
     request.setCharacterEncoding("UTF-8");
     LoanTypeView loanTypeView = new LoanTypeView();
     loanTypeView.setName(request.getParameter("name"));
+    LoanTypeManipulator controller = new LoanTypeManipulator();
     List<LoanType> loanTypes = controller.all(loanTypeView);
 %>
 
@@ -34,9 +35,7 @@
 
             </div>
         </form>
-        <%
-
-            if (loanTypes.size() > 0) { %>
+        <%if (loanTypes.size() > 0) { %>
 
         <table class="table">
             <thead>

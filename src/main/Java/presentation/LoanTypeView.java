@@ -38,7 +38,7 @@ public class LoanTypeView implements Serializable,IView<LoanType> {
     }
 
     public String getRate() {
-        return rate;
+        return rate == null ? "0.0" : rate;
     }
 
     public void setRate(String rate) {

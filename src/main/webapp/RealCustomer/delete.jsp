@@ -1,8 +1,8 @@
-<%@ page import="controller.RealCustomerController" %>
+<%@ page import="logic.RealCustomerManipulator" %>
 <%
     String id = request.getParameter("id");
     if(id != null){
-        RealCustomerController controller =  new RealCustomerController();
+        RealCustomerManipulator logic =  new RealCustomerManipulator();
         controller.delete(Integer.parseInt(id));
     }
     response.sendRedirect("index.jsp");

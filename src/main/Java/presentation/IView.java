@@ -1,6 +1,6 @@
 package presentation;
 
-import dataaccess.IEntity;
+import bean.IEntity;
 
 /**
  * Created by Dotin School1 on 5/12/2016.

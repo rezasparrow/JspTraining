@@ -1,8 +1,5 @@
 package bean;
 
-import dataaccess.IEntity;
-import org.intellij.lang.annotations.JdkConstants;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;

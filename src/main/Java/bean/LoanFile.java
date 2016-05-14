@@ -1,7 +1,5 @@
 package bean;
 
-import dataaccess.IEntity;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
