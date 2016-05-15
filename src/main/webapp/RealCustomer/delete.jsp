@@ -2,7 +2,7 @@
 <%
     String id = request.getParameter("id");
     if(id != null){
-        RealCustomerManipulator logic =  new RealCustomerManipulator();
+        RealCustomerManipulator controller =  new RealCustomerManipulator();
         controller.delete(Integer.parseInt(id));
     }
     response.sendRedirect("index.jsp");
