@@ -1,12 +1,11 @@
-package presentation;
+package logic.model;
 
 import bean.GrantCondition;
-import com.sun.xml.internal.bind.v2.model.core.ReferencePropertyInfo;
 
 import java.io.Serializable;
 
 
-public class GrantConditionView implements Serializable,IView<GrantCondition> {
+public class GrantConditionView implements Serializable, IView<GrantCondition> {
     private Integer id;
 
     private String name;
@@ -17,6 +16,34 @@ public class GrantConditionView implements Serializable,IView<GrantCondition> {
 
     public GrantConditionView() {
 
+    }
+
+    public GrantConditionView(String name, String maxAmount, String minAmount, String maxDuration, String minDuration) {
+        this.name = name;
+
+        try {
+            this.maxAmount = Integer.parseInt(maxAmount);
+        } catch (Exception e) {
+            this.maxAmount = null;
+        }
+
+        try {
+            this.minAmount = Integer.parseInt(minAmount);
+        } catch (Exception e) {
+            this.minAmount = null;
+        }
+        try {
+            this.maxDuration = Integer.parseInt(maxDuration);
+        } catch (Exception e) {
+            this.maxDuration = null;
+        }
+
+
+        try {
+            this.minDuration = Integer.parseInt(minDuration);
+        } catch (Exception e) {
+            this.minDuration = null;
+        }
     }
 
 
@@ -87,7 +114,39 @@ public class GrantConditionView implements Serializable,IView<GrantCondition> {
 
     @Override
     public GrantCondition toModel() {
-        return null;
+        GrantCondition grantCondition = new GrantCondition();
+        if (isValid()) {
+            if (id != null) {
+                grantCondition.setId(id);
+            }
+            grantCondition.setName(name);
+            grantCondition.setMaxAmount(maxAmount);
+            grantCondition.setMinAmount(minAmount);
+            grantCondition.setMaxDuration(maxDuration);
+            grantCondition.setMinDuration(minDuration);
+            return grantCondition;
+
+        } else {
+            return null;
+        }
     }
 
+    public boolean isValid() {
+        if (minAmount == null || "".equals(minAmount)) {
+            return false;
+        }
+        if (minDuration == null || "".equals(minDuration)) {
+            return false;
+        }
+        if (name == null || "".equals(name)) {
+            return false;
+        }
+        if (maxAmount == null || "".equals(maxAmount)) {
+            return false;
+        }
+        if (maxDuration == null || "".equals(maxDuration)) {
+            return false;
+        }
+        return true;
+    }
 }

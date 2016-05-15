@@ -1,22 +1,24 @@
-package presentation;
+package logic.model;
 
+import bean.GrantCondition;
 import bean.LoanType;
-import org.hibernate.type.LongType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class LoanTypeView implements Serializable,IView<LoanType> {
+public class LoanTypeView implements Serializable, IView<LoanType> {
     private String id;
     private String name;
-    private String rate;
+    private Float rate;
     private List<GrantConditionView> grantConditions = new ArrayList<>();
 
     public LoanTypeView() {
     }
 
-    public LoanTypeView(String name, String rate) {
+    public LoanTypeView(String name, Float rate) {
         this.name = name;
         this.rate = rate;
     }
@@ -37,27 +39,46 @@ public class LoanTypeView implements Serializable,IView<LoanType> {
         this.name = name;
     }
 
-    public String getRate() {
-        return rate == null ? "0.0" : rate;
+    public Float getRate() {
+        return rate == null ? 0.0F : rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(Float rate) {
         this.rate = rate;
     }
 
     @Override
     public LoanType toModel() {
         LoanType loanType = new LoanType();
-        if(id!= null)
-        {
+        if (id != null) {
             loanType.setId(Integer.parseInt(id));
         }
         loanType.setName(name);
-        if(rate != null){
-            loanType.setRate(Float.parseFloat(rate));
+        if (rate != null) {
+            loanType.setRate(rate);
         }
-
+        Set<GrantCondition> grants = new HashSet<>();
+        for (GrantConditionView grand : grantConditions) {
+            grants.add(grand.toModel());
+        }
+        loanType.setGrantConditions(grants);
         return loanType;
+    }
+
+    @Override
+    public boolean isValid() {
+        if (name == null && "".equals(name.trim())) {
+            return false;
+        }
+        if (name == null && "".equals(name.trim())) {
+            return false;
+        }
+        for (GrantConditionView condition : grantConditions) {
+            if (!condition.isValid()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public List<GrantConditionView> getGrantConditions() {
@@ -68,7 +89,7 @@ public class LoanTypeView implements Serializable,IView<LoanType> {
         this.grantConditions = grantConditions;
     }
 
-    public void addGrantCondition(GrantConditionView grantCondition){
+    public void addGrantCondition(GrantConditionView grantCondition) {
         grantConditions.add(grantCondition);
     }
 }

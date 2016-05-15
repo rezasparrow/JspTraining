@@ -40,7 +40,7 @@ public abstract class Manager<T extends IEntity> {
         try (DataBaseManager dataBaseManager = new DataBaseManager()) {
 
             Session session = dataBaseManager.getSessionFactory().openSession();
-            Criteria criteria = session.createCriteria(getClass());
+            Criteria criteria = session.createCriteria(getEntityClass());
             List<T> entities = criteria.list();
             session.close();
             return entities;
@@ -51,7 +51,7 @@ public abstract class Manager<T extends IEntity> {
     public List<T> all(T entity) {
         try (DataBaseManager dataBaseManager = new DataBaseManager()) {
             Session session = dataBaseManager.getSessionFactory().openSession();
-            Criteria criteria = session.createCriteria(getClass());
+            Criteria criteria = session.createCriteria(getEntityClass());
             criteria = createFindQuery(criteria, entity);
             List<T> entities = criteria.list();
             session.close();

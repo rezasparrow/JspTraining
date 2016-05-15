@@ -6,31 +6,31 @@ import java.io.Serializable;
 @Entity
 @Table(name = "grant_condition")
 @Embeddable
-public class GrantCondition implements Serializable , IEntity {
+public class GrantCondition implements Serializable, IEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    public GrantCondition(){
+    public GrantCondition() {
 
     }
 
-    @Column(name = "name" , nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "max_duration" , nullable = false)
+    @Column(name = "max_duration", nullable = false)
     private Integer maxDuration;
 
-    @Column(name = "min_duration" , nullable = false)
+    @Column(name = "min_duration", nullable = false)
     private Integer minDuration;
 
-    @Column(name = "max_amount" , nullable = false)
+    @Column(name = "max_amount", nullable = false)
     private Integer maxAmount;
 
-    @Column(name = "min_amount" , nullable = false)
+    @Column(name = "min_amount", nullable = false)
     private Integer minAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "loan_type_id", nullable = false)
     private LoanType loanType;
 
@@ -64,7 +64,7 @@ public class GrantCondition implements Serializable , IEntity {
     }
 
     public void setMaxDuration(Integer maxDuration) {
-        this.maxAmount = maxDuration;
+        this.maxDuration = maxDuration;
     }
 
     public Integer getMinDuration() {

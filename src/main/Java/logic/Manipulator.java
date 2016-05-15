@@ -3,7 +3,7 @@ package logic;
 import bean.IEntity;
 import dataaccess.Manager;
 import exception.NotFoundObjectException;
-import presentation.IView;
+import logic.model.IView;
 import util.MessageBundle;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import="bean.RealCustomer" %>
 <%@ page import="logic.RealCustomerManipulator" %>
-<%@ page import="presentation.RealCustomerView" %>
+<%@ page import="logic.model.RealCustomerView" %>
 <%@ page import="util.MessageBundle" %>
 <%@ page import="exception.NotFoundObjectException" %>
 
@@ -10,7 +10,7 @@
     String id = request.getParameter("id");
     RealCustomerView realCustomer = new RealCustomerView();
 
-    RealCustomerManipulator logic = new RealCustomerManipulator();
+    RealCustomerManipulator manipulator = new RealCustomerManipulator();
     if ("post".equalsIgnoreCase(request.getMethod())) {
 
         realCustomer.id = Integer.parseInt(id);
@@ -20,14 +20,14 @@
         realCustomer.birthday = request.getParameter("birthday");
         realCustomer.nationalCode = request.getParameter("nationalCode");
 
-        MessageBundle messageBundle = controller.update(realCustomer);
+        MessageBundle messageBundle = manipulator.update(realCustomer);
         if (messageBundle.isValid()) {
-            response.sendRedirect("/RealCustomer/index.jsp");
+            response.sendRedirect("/RealCustomer/show?id="+realCustomer.id);
         }
     } else {
         try {
 
-            realCustomer = RealCustomerView.toView((RealCustomer) controller.findById(Integer.parseInt(id)));
+            realCustomer = RealCustomerView.toView((RealCustomer) manipulator.findById(Integer.parseInt(id)));
         } catch (Exception e) {
             response.sendRedirect("/RealCustomer/index.jsp");
         }

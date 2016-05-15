@@ -1,4 +1,4 @@
-<%@ page import="presentation.LoanTypeView" %>
+<%@ page import="logic.model.LoanTypeView" %>
 <%@ page import="bean.LoanType" %>
 <%@ page import="logic.LoanTypeManipulator" %>
 <%@ page import="util.MessageBundle" %>
@@ -11,7 +11,7 @@
 
         request.setCharacterEncoding("UTF-8");
         loanTypeView.setName(request.getParameter("name"));
-        loanTypeView.setRate(request.getParameter("lastName"));
+        loanTypeView.setRate(Float.parseFloat(request.getParameter("rate")));
         LoanTypeManipulator controller = new LoanTypeManipulator();
         MessageBundle errors = controller.save(loanTypeView);
         if (errors.isValid()) {
@@ -25,13 +25,17 @@
 <html>
 <head>
     <title>تعریف نوع‌تسهیلات جدید</title>
+    <link rel="stylesheet" href="http://ifont.ir/apicode/37">
+    <meta charset="utf-8">
     <link rel="stylesheet" href="/css/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="/css/bootstrap-rtl/dist/css/bootstrap-rtl.css">
-    <link rel="stylesheet" href="http://ifont.ir/apicode/37">
     <style>
         body {
             font-family: "B yas", tahoma;
             font-size: 20px;
+        }
+        input{
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
     </style>
 </head>
@@ -46,7 +50,7 @@
     </div>
 </nav>
 <div class="container" style="margin-top: 80px;">
-    <form class="panel panel-primary">
+    <form class="panel panel-primary" method="post" action="/LoanType/new">
         <div class="panel-heading">
             <h2 class="text-center">
                 تسهیلات جدید
@@ -76,7 +80,7 @@
                     </div>
                     <div class="col-sm-4">
                         <input class="form-control" id="rate" name="rate"
-                               required title="نرخ سود الزامی است" x-moz-errormessage="نرخ سود الزامی است">
+                               required title="نرخ سود الزامی است" type="number" step="0.001" x-moz-errormessage="نرخ سود الزامی است">
                     </div>
                 </div>
 
@@ -100,17 +104,17 @@
                         </label>
                     </div>
                     <div class="col-sm-4">
-                        <input class="form-control" onkeyup="validate(this)" id="grandCondition[minAmount]">
+                        <input class="form-control" type="number" step="1" onkeyup="validate(this)" id="grandCondition[minAmount]">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-2">
-                        <label for="grandCondition[maxDuration]" class="control-label">
+                        <label for="grandCondition[maxAmount]" class="control-label">
                             حداکثر مبلغ قرارداد
                         </label>
                     </div>
                     <div class="col-sm-4">
-                        <input class="form-control" onkeyup="validate(this)" id="grandCondition[maxDuration]">
+                        <input class="form-control" type="number" step="1" onkeyup="validate(this)" id="grandCondition[maxAmount]">
                     </div>
                 </div>
                 <div class="form-group">
@@ -120,17 +124,17 @@
                         </label>
                     </div>
                     <div class="col-sm-4">
-                        <input class="form-control has-error" onkeyup="validate(this)" id="grandCondition[minDuration]">
+                        <input class="form-control has-error" type="number" step="1" onkeyup="validate(this)" id="grandCondition[minDuration]">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-2">
-                        <label for="grandCondition[maxAmount]" class="control-label">
+                        <label for="grandCondition[maxDuration]" class="control-label">
                             حداکثر مدت قرارداد
                         </label>
                     </div>
                     <div class="col-sm-4">
-                        <input class="form-control" onkeyup="validate(this)" id="grandCondition[maxAmount]">
+                        <input class="form-control" type="number" step="1" onkeyup="validate(this)" id="grandCondition[maxDuration]">
                     </div>
                     <div class="col-sm-offset-3 col-sm-3">
                         <input type="button" class="btn btn-success" value="اضافه کردن شرط جدید"
@@ -180,6 +184,14 @@
 </div>
 <script>
     var numElement = 0;
+    function addError(element) {
+        var parent = element.parentElement;
+        parent.className += " has-error"
+    }
+    function removeError(element) {
+        var parent = element.parentElement;
+        parent.className = parent.className.replace("has-error", "");
+    }
     function validate(element) {
         var parent = element.parentElement;
         if (element.value == "") {
@@ -205,6 +217,20 @@
         valid = validate(minAmount) && valid;
         valid = validate(minDuration) && valid;
         valid = validate(maxDuration) && valid;
+        if (valid) {
+            if (parseInt(maxAmount.value) <= parseInt(minAmount.value)) {
+                valid = false;
+                addError(minAmount)
+            } else {
+                removeError(minAmount);
+            }
+            if (parseInt(maxDuration.value )<= parseInt(minDuration.value)) {
+                valid = false;
+                addError(minDuration)
+            } else {
+                removeError(minDuration);
+            }
+        }
         if (!valid) {
             return;
         }
@@ -213,10 +239,10 @@
         var row = conditionTable.insertRow(numElement + 1);
         row.insertCell(0).innerHTML = numElement;
         row.insertCell(1).innerHTML = name.value + '<input type="hidden" name="grandCondition[name][' + numElement + ']" value="' + name.value + '"/>';
-        row.insertCell(2).innerHTML = minAmount.value + '<input type="hidden" name="grandCondition[name][' + numElement + ']" value="' + minAmount.value + '"/>';
-        row.insertCell(3).innerHTML = maxAmount.value + '<input type="hidden" name="grandCondition[name][' + numElement + ']" value="' + maxAmount.value + '"/>';
-        row.insertCell(4).innerHTML = minDuration.value + '<input type="hidden" name="grandCondition[name][' + numElement + ']" value="' + minDuration.value + '"/>';
-        row.insertCell(5).innerHTML = maxDuration.value + '<input type="hidden" name="grandCondition[name][' + numElement + ']" value="' + maxDuration.value + '"/>';
+        row.insertCell(2).innerHTML = minAmount.value + '<input type="hidden" name="grandCondition[minAmount][' + numElement + ']" value="' + minAmount.value + '"/>';
+        row.insertCell(3).innerHTML = maxAmount.value + '<input type="hidden" name="grandCondition[maxAmount][' + numElement + ']" value="' + maxAmount.value + '"/>';
+        row.insertCell(4).innerHTML = minDuration.value + '<input type="hidden" name="grandCondition[minDuration][' + numElement + ']" value="' + minDuration.value + '"/>';
+        row.insertCell(5).innerHTML = maxDuration.value + '<input type="hidden" name="grandCondition[maxDuration][' + numElement + ']" value="' + maxDuration.value + '"/>';
 
         name.value = "";
         maxAmount.value = "";

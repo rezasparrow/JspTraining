@@ -19,4 +19,21 @@
         <servlet-name>NewLoanType</servlet-name>
         <url-pattern>/LoanType/new</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>ShowRealCustomer</servlet-name>
+        <servlet-class>presentation.controller.RealCustomerController</servlet-class>
+        <init-param>
+            <param-name>action</param-name>
+            <param-value>show</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ShowRealCustomer</servlet-name>
+        <url-pattern>/RealCustomer/show</url-pattern>
+    </servlet-mapping>
+
+
+
 </web-app>

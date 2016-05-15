@@ -1,14 +1,16 @@
-package presentation;
+package logic.model;
 
 import bean.RealCustomer;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 
-public class RealCustomerView implements IView<RealCustomer> {
+public class RealCustomerView implements IView<RealCustomer> , Serializable {
     public String firstName;
     public String lastName;
     public String fatherName;
@@ -39,6 +41,37 @@ public class RealCustomerView implements IView<RealCustomer> {
         }
 
         return realCustomer;
+    }
+
+    @Override
+    public boolean isValid() {
+        if(firstName != null || "".equals(firstName.trim())){
+            return false;
+        }
+        if(lastName != null || "".equals(lastName.trim())){
+            return false;
+        }
+        if(fatherName != null || "".equals(fatherName.trim())  ){
+            return false;
+        }
+        if(birthday != null || "".equals(birthday.trim())){
+            return false;
+        }else{
+            DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+            Date date = null;
+
+            try {
+                if (birthday != null) {
+                    date = df.parse(birthday);
+                }
+            } catch (ParseException e) {
+                return false;
+            }
+        }
+        if(firstName != null || "".equals(firstName.trim())){
+            return false;
+        }
+        return true;
     }
 
     public String getFirstName() {

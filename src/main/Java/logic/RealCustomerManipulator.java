@@ -2,10 +2,10 @@ package logic;
 
 
 import bean.RealCustomer;
-import logic.Bundle.RealCustomerBundle;
+import logic.bundle.RealCustomerBundle;
 import dataaccess.RealCustomerManager;
 import exception.NotFoundObjectException;
-import presentation.RealCustomerView;
+import logic.model.RealCustomerView;
 import util.MessageBundle;
 
 import java.text.DateFormat;

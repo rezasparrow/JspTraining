@@ -1,10 +1,10 @@
 package logic;
 
 import bean.GrantCondition;
-import logic.Bundle.GrantConditionBundle;
+import logic.bundle.GrantConditionBundle;
 import dataaccess.GrantConditionManager;
 import dataaccess.Manager;
-import presentation.GrantConditionView;
+import logic.model.GrantConditionView;
 import util.MessageBundle;
 
 

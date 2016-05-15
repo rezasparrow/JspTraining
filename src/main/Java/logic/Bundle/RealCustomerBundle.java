@@ -1,4 +1,4 @@
-package logic.Bundle;
+package logic.bundle;
 
 public class RealCustomerBundle {
     public final static String CAN_NOT_FIND_REAL_CUSTOMER = "مشتری پیدا نشده است";

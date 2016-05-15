@@ -1,9 +1,9 @@
 package logic;
 
 import bean.LoanType;
-import logic.Bundle.LoanTypeBundle;
+import logic.bundle.LoanTypeBundle;
 import dataaccess.LoanTypeManager;
-import presentation.LoanTypeView;
+import logic.model.LoanTypeView;
 import util.MessageBundle;
 
 /**
@@ -24,9 +24,14 @@ public class LoanTypeManipulator extends Manipulator<LoanTypeView, LoanType> {
         if (view.getRate() == null || view.getName().trim().length() == 0) {
             errors.addError("lastName", LoanTypeBundle.RATE_REQUIRED);
         }
-        if (view.getGrantConditions().size() == 0){
+        if (view.getGrantConditions().size() == 0) {
             errors.addError("grantCondition", LoanTypeBundle.GRANT_CONDITION_REQUIRED);
         }
         return errors;
+    }
+
+    @Override
+    public MessageBundle save(LoanTypeView view) {
+        return super.save(view);
     }
 }

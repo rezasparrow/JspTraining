@@ -1,4 +1,4 @@
-package presentation;
+package logic.model;
 
 import bean.IEntity;
 
@@ -7,4 +7,5 @@ import bean.IEntity;
  */
 public interface IView <T extends IEntity>{
     T toModel();
+    boolean isValid();
 }

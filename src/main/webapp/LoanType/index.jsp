@@ -1,4 +1,4 @@
-<%@ page import="presentation.LoanTypeView" %>
+<%@ page import="logic.model.LoanTypeView" %>
 <%@ page import="logic.LoanTypeManipulator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="bean.LoanType" %>
@@ -31,7 +31,7 @@
 
                 <label class="label-control"> نام نوع تسهیلات</label>
                 <input name="name" class="input-control" value="<%=loanTypeView.getName()%>">
-                <input type="submit" value="جست‌وجو" class="btn btn-sml">
+                <input type="submit" value="جست‌وجو" style="margin-bottom: 15px;margin-right: 15px;" class="btn btn-sml">
 
             </div>
         </form>

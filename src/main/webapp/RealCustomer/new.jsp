@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
-<%@ page import="presentation.RealCustomerView" %>
+<%@ page import="logic.model.RealCustomerView" %>
 <%@ page import="logic.RealCustomerManipulator" %>
 <%@ page import="util.MessageBundle" %>
 

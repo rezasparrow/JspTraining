@@ -1,8 +1,7 @@
-<%@ page import="java.util.List" %>
 <%@ page import="bean.RealCustomer" %>
 <%@ page import="logic.RealCustomerManipulator" %>
-<%@ page import="presentation.RealCustomerView" %>
-<%@ page import="dataaccess.RealCustomerManager" %>
+<%@ page import="logic.model.RealCustomerView" %>
+<%@ page import="java.util.List" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 
@@ -16,8 +15,8 @@
     if (customerNumber != null && !"".equals(customerNumber.trim())) {
         realCustomerView.customerNumber = customerNumber;
     }
-
-    List<RealCustomer> realCustomers = controller.all(realCustomerView);
+    RealCustomerManipulator realCustomerManipulator = new RealCustomerManipulator();
+    List<RealCustomer> realCustomers = realCustomerManipulator.all(realCustomerView);
 %>
 
 <html>
@@ -100,6 +99,7 @@
                 </th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -109,20 +109,33 @@
             %>
             <tr>
 
-                <td><%=num%>
+                <td>
+                    <%=num%>
                 </td>
-                <td><%=realCustomer.getCustomerNumber()%>
+                <td>
+                    <%=realCustomer.getCustomerNumber()%>
                 </td>
-                <td><%=realCustomer.getFirstName()%>
+                <td>
+                    <%=realCustomer.getFirstName()%>
                 </td>
-                <td><%=realCustomer.getLastName()%>
+                <td>
+                    <%=realCustomer.getLastName()%>
                 </td>
-                <td><%=realCustomer.getFatherName()%>
+                <td>
+                    <%=realCustomer.getFatherName()%>
                 </td>
-                <td><%=realCustomer.getNationalCode()%>
+                <td>
+                    <%=realCustomer.getNationalCode()%>
                 </td>
-                <td><a href="/RealCustomer/edit.jsp?id=<%=realCustomer.getId()%>">edit</a></td>
-                <td><a href="/RealCustomer/delete.jsp?id=<%=realCustomer.getId()%>">delete</a></td>
+                <td>
+                    <a href="/RealCustomer/show.jsp?id=<%=realCustomer.getId()%>">نمایش</a>
+                </td>
+                <td>
+                    <a href="/RealCustomer/edit.jsp?id=<%=realCustomer.getId()%>">ویرایش</a>
+                </td>
+                <td>
+                    <a href="/RealCustomer/delete.jsp?id=<%=realCustomer.getId()%>">حذف</a>
+                </td>
             </tr>
             <%}%>
             </tbody>
