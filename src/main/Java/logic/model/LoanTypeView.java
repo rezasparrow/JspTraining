@@ -2,6 +2,7 @@ package logic.model;
 
 import bean.GrantCondition;
 import bean.LoanType;
+import org.hibernate.type.LongType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class LoanTypeView implements Serializable, IView<LoanType> {
-    private String id;
+    private Integer id;
     private String name;
     private Float rate;
     private List<GrantConditionView> grantConditions = new ArrayList<>();
@@ -23,11 +24,11 @@ public class LoanTypeView implements Serializable, IView<LoanType> {
         this.rate = rate;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -51,7 +52,7 @@ public class LoanTypeView implements Serializable, IView<LoanType> {
     public LoanType toModel() {
         LoanType loanType = new LoanType();
         if (id != null) {
-            loanType.setId(Integer.parseInt(id));
+            loanType.setId(id);
         }
         loanType.setName(name);
         if (rate != null) {
@@ -92,4 +93,13 @@ public class LoanTypeView implements Serializable, IView<LoanType> {
     public void addGrantCondition(GrantConditionView grantCondition) {
         grantConditions.add(grantCondition);
     }
+
+    public static LoanTypeView toView(LoanType loanType){
+        LoanTypeView loanTypeView = new LoanTypeView();
+        loanTypeView.id = loanType.getId();
+        loanTypeView.name = loanType.getName();
+        loanTypeView.rate = loanType.getRate();
+        return loanTypeView;
+    }
+
 }

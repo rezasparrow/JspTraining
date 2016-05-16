@@ -28,23 +28,10 @@ public class RealCustomer extends Customer implements Serializable  {
     @Column(name = "national_code" , nullable = false  , length = 10)
     private String nationalCode;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    @OneToMany( mappedBy = "customer")
     private Set<LoanFile> loanFiles = new HashSet<>();
 
     public RealCustomer() {
-    }
-
-    public RealCustomerView toView() {
-        RealCustomerView realCustomerView = new RealCustomerView();
-        realCustomerView.id = getId();
-        realCustomerView.birthday = birthDay.toString();
-        realCustomerView.customerNumber = ((Integer)this.getCustomerNumber()).toString();
-        realCustomerView.firstName = firstName;
-        realCustomerView.lastName = lastName;
-        realCustomerView.fatherName = fatherName;
-        realCustomerView.nationalCode = nationalCode;
-
-        return realCustomerView;
     }
 
     public RealCustomer(String firstName, String lastName, String fatherName, Date birthDay, String nationalCode) {

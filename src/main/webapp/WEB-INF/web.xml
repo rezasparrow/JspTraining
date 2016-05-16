@@ -5,8 +5,35 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
+    <!--Loan File-->
+    <servlet>
+        <servlet-name>LoanFileNew</servlet-name>
+        <servlet-class>presentation.controller.LoanFileController</servlet-class>
+        <init-param>
+            <param-name>action</param-name>
+            <param-value>new</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoanFileNew</servlet-name>
+        <url-pattern>/LoanFile/new</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LoanFileCreate</servlet-name>
+        <servlet-class>presentation.controller.LoanFileController</servlet-class>
+        <init-param>
+            <param-name>action</param-name>
+            <param-value>create</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoanFileCreate</servlet-name>
+        <url-pattern>/LoanFile/create</url-pattern>
+    </servlet-mapping>
 
 
+    <!--Loan Type-->
     <servlet>
         <servlet-name>NewLoanType</servlet-name>
         <servlet-class>presentation.controller.LoanTypeController</servlet-class>
@@ -20,6 +47,7 @@
         <url-pattern>/LoanType/new</url-pattern>
     </servlet-mapping>
 
+    <!--REAL CUSTOMER ROUTE-->
 
     <servlet>
         <servlet-name>ShowRealCustomer</servlet-name>
@@ -34,6 +62,27 @@
         <url-pattern>/RealCustomer/show</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RealCustomerIndex</servlet-name>
+        <servlet-class>presentation.controller.RealCustomerController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RealCustomerIndex</servlet-name>
+        <url-pattern>/RealCustomer</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RealCustomerSearch</servlet-name>
+        <servlet-class>presentation.controller.RealCustomerController</servlet-class>
+        <init-param>
+            <param-name>action</param-name>
+            <param-value>search</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RealCustomerSearch</servlet-name>
+        <url-pattern>/RealCustomer/search</url-pattern>
+    </servlet-mapping>
 
 
 </web-app>

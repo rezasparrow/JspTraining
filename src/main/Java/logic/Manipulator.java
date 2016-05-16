@@ -35,8 +35,8 @@ public abstract class Manipulator<T extends IView,E extends IEntity > {
         return errors;
     }
 
-    public IEntity findById(int id) throws NotFoundObjectException {
-        IEntity entity = manager.findById(id);
+    public E findById(int id) throws NotFoundObjectException {
+        E entity = (E) manager.findById(id);
         if (entity != null) {
             return entity;
         }

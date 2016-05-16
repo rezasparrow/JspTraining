@@ -9,8 +9,8 @@ import java.io.Closeable;
 
 public class DataBaseManager implements Closeable {
 
-    private SessionFactory session;
-    public DataBaseManager(){
+    private static SessionFactory session;
+    private DataBaseManager(){
         Configuration configuration = new Configuration().configure();
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                 .applySettings(configuration.getProperties());
@@ -18,13 +18,16 @@ public class DataBaseManager implements Closeable {
                 .buildSessionFactory(builder.build());
     }
 
-    public  SessionFactory getSessionFactory()  {
+    public static SessionFactory getSessionFactory()  {
 
+        if(session == null || session.isClosed()){
+            new DataBaseManager();
+        }
         return session;
     }
 
 
     public void close()  {
-        session.close();
+
     }
 }

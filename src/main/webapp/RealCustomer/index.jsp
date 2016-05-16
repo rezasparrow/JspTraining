@@ -6,17 +6,8 @@
 
 
 <%
-    RealCustomerManipulator logic = new RealCustomerManipulator();
-    RealCustomerView realCustomerView = new RealCustomerView();
-    realCustomerView.firstName = request.getParameter("firstName");
-    realCustomerView.lastName = request.getParameter("lastName");
-    realCustomerView.nationalCode = request.getParameter("nationalCode");
-    String customerNumber = request.getParameter("customerNumber");
-    if (customerNumber != null && !"".equals(customerNumber.trim())) {
-        realCustomerView.customerNumber = customerNumber;
-    }
-    RealCustomerManipulator realCustomerManipulator = new RealCustomerManipulator();
-    List<RealCustomer> realCustomers = realCustomerManipulator.all(realCustomerView);
+    RealCustomerView realCustomerView = (RealCustomerView) request.getAttribute("realCustomer");
+    List<RealCustomer> realCustomers = (List<RealCustomer>) request.getAttribute("realCustomers");
 %>
 
 <html>
@@ -32,7 +23,7 @@
     <div class="content">
 
         <a class="btn btn-sml" href="/RealCustomer/new.jsp">تعریف مشتری جدید</a>
-        <form method="post" action="/RealCustomer/index.jsp">
+        <form method="post" action="/RealCustomer/search">
             <table class="table">
                 <thead>
                 <tr>
@@ -128,7 +119,7 @@
                     <%=realCustomer.getNationalCode()%>
                 </td>
                 <td>
-                    <a href="/RealCustomer/show.jsp?id=<%=realCustomer.getId()%>">نمایش</a>
+                    <a href="/RealCustomer/show?id=<%=realCustomer.getId()%>">نمایش</a>
                 </td>
                 <td>
                     <a href="/RealCustomer/edit.jsp?id=<%=realCustomer.getId()%>">ویرایش</a>

@@ -31,7 +31,6 @@ public class LoanTypeController extends HttpServlet {
             List<GrantConditionView> grantConditionViews = new ArrayList<>();
             int numGrandCondition = 0;
             while (true) {
-                Map<String, String[]> params = request.getParameterMap();
                 String nameCondition = request.getParameter("grandCondition[name][" + numGrandCondition + "]");
                 String minDurationCondition = request.getParameter("grandCondition[minDuration][" + numGrandCondition + "]");
                 String maxDurationCondition = request.getParameter("grandCondition[maxDuration][" + numGrandCondition + "]");

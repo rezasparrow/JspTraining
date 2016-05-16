@@ -11,14 +11,12 @@ import java.util.List;
 public class RealCustomerManager extends Manager<RealCustomer> {
 
     public static List<RealCustomer> findByNationalCode(String nationalCode) {
-        try (DataBaseManager dataBaseManager = new DataBaseManager()) {
-            Session session = dataBaseManager.getSessionFactory().openSession();
+            Session session = DataBaseManager.getSessionFactory().openSession();
             Criteria criteria = session.createCriteria(RealCustomer.class).add(Restrictions.eq("nationalCode", nationalCode));
             List<RealCustomer> entities = criteria.list();
             session.close();
             return entities;
         }
-    }
 
     @Override
     Class<RealCustomer> getEntityClass() {

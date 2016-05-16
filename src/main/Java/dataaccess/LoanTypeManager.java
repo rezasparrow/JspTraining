@@ -29,16 +29,14 @@ public class LoanTypeManager extends Manager<LoanType> {
 
     @Override
     public void create(LoanType loanType) {
-        try (DataBaseManager dataBaseManager = new DataBaseManager()) {
-            Session session = dataBaseManager.getSessionFactory().openSession();
-            Transaction transaction = session.beginTransaction();
-            session.persist(loanType);
-            for (GrantCondition grantCondition:loanType.getGrantConditions()){
-                grantCondition.setLoanType(loanType);
-                session.persist(grantCondition);
-            }
-            transaction.commit();
-            session.close();
+        Session session = DataBaseManager.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        session.persist(loanType);
+        for (GrantCondition grantCondition : loanType.getGrantConditions()) {
+            grantCondition.setLoanType(loanType);
+            session.persist(grantCondition);
         }
+        transaction.commit();
+        session.close();
     }
 }

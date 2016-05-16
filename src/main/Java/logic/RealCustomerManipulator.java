@@ -72,10 +72,10 @@ public class RealCustomerManipulator extends Manipulator<RealCustomerView, RealC
         MessageBundle messageBundle = new MessageBundle();
         try {
             RealCustomer entity = (RealCustomer) findById(view.id);
-            view.customerNumber = entity.getCustomerNumber().toString();
+            view.customerNumber = entity.getCustomerNumber();
             return super.update(view);
         } catch (NotFoundObjectException e) {
-            messageBundle.addError("base", "مشتری مورد نظر پیدا نشد.");
+            messageBundle.addError("base", RealCustomerBundle.NOT_FOUNT_REAL_CUSTOMER);
         }
         return messageBundle;
     }

@@ -1,7 +1,12 @@
 <%@ page import="logic.model.RealCustomerView" %>
+<%@ page import="logic.model.GrantConditionView" %>
+<%@ page import="java.util.List" %>
+<%@ page import="logic.model.LoanFileView" %>
+<%@ page import="bean.LoanFile" %>
+<%@ page import="java.util.Set" %>
 <%
-    RealCustomerView realCustomerView = (RealCustomerView) request.getAttribute("realCustomer");
-    if (realCustomerView == null) {
+    RealCustomerView realCustomer = (RealCustomerView) request.getAttribute("realCustomer");
+    if (realCustomer == null) {
         response.sendRedirect("/index.jsp");
     }
 
@@ -41,6 +46,9 @@
             </h2>
         </div>
         <div class="panel-body">
+            <h4 class="text-center">
+                اصلاعات شخصی
+            </h4>
             <div class="form-horizontal">
 
                 <div class="form-group">
@@ -48,7 +56,7 @@
                         شماره مشتری
                     </div>
                     <div class="col-sm-6">
-                        <%=realCustomerView.getCustomerNumber()%>
+                        <%=realCustomer.getCustomerNumber()%>
                     </div>
                 </div>
 
@@ -60,7 +68,7 @@
                         </label>
                     </div>
                     <div class="col-sm-6">
-                        <%=realCustomerView.getFirstName()%>
+                        <%=realCustomer.getFirstName()%>
                     </div>
                 </div>
 
@@ -72,7 +80,7 @@
                         </label>
                     </div>
                     <div class="col-sm-6">
-                        <%=realCustomerView.getLastName()%>
+                        <%=realCustomer.getLastName()%>
                     </div>
                 </div>
 
@@ -84,7 +92,7 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <%=realCustomerView.getFatherName()%>
+                        <%=realCustomer.getFatherName()%>
                     </div>
                 </div>
 
@@ -95,16 +103,75 @@
                         </label>
                     </div>
                     <div class="col-sm-6">
-                        <%=realCustomerView.getBirthday().toString()%>
+                        <%=realCustomer.getBirthday().toString()%>
                     </div>
                 </div>
 
 
             </div>
+
+            <div class="form-horizontal">
+                <h3 class="text-center">
+                    پرونده‌های تسهیلاتی
+                </h3>
+                <%
+                    if (realCustomer.getLoanFiles().size() > 0) {
+                %>
+                <div class="form-group">
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>
+                                ردیف
+                            </th>
+                            <th>
+                                نوع تسهیلات
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            List<LoanFile> loanFiles = realCustomer.getLoanFiles();
+                            for (int i = 0; i < loanFiles.size(); ++i) {
+                        %>
+                        <tr>
+                            <td>
+                                <%=i + 1%>
+                            </td>
+                            <td>
+                                <%=loanFiles.get(i).getLoanType().getName()%>
+                            </td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                        </tbody>
+
+                    </table>
+                </div>
+                <%
+                } else {
+                %>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <h4 class="help-block">هیچ پرونده‌تسهیلاتی برای این مشتری تعریف نشده است</h4>
+                    </div>
+                </div>
+                <%
+                    }
+                %>
+                <div class="form-group">
+                    <div class="col-sm-12" style="direction: ltr;">
+                        <a class="btn btn-success" href="/LoanFile/new?customerId=<%=realCustomer.getId()%>" >
+                            اضافه کردن پرونده تهسیلاتی</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="panel-footer">
             <div>
-                <a href="/RealCustomer/edit.jsp?id=<%=realCustomerView.getId()%>" class="btn btn-success">
+                <a href="/RealCustomer/edit.jsp?id=<%=realCustomer.getId()%>" class="btn btn-success">
                     ویرایش
                 </a>
                 <a href="/RealCustomer" class="btn btn-primary">

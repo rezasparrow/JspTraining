@@ -30,8 +30,4 @@ public class LoanTypeManipulator extends Manipulator<LoanTypeView, LoanType> {
         return errors;
     }
 
-    @Override
-    public MessageBundle save(LoanTypeView view) {
-        return super.save(view);
-    }
 }
